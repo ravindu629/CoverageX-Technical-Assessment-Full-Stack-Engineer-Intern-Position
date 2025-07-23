@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: todo_db
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # To initialize database schema
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d taskdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: todo_backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_USER: user
+      DB_HOST: db
+      DB_NAME: taskdb
+      DB_PASSWORD: password
+      DB_PORT: 5432
+      PORT: 5000
+    depends_on:
+      db:
+        condition: service_healthy # Ensure DB is ready before starting backend
+    volumes:
+      - ./backend:/app
+      - /app/node_modules # Anonymous volume to prevent host node_modules from overriding container's
+    command: sh -c "npm install && npm start" # Reinstall dependencies in case of volume issues
+
+  frontend:
+    build: ./frontend
+    container_name: todo_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_started # Start frontend after backend
+    volumes:
+      - ./frontend:/app # Mount the frontend source
+      - /app/node_modules # Anonymous volume for node_modules
+    environment:
+      # This is crucial for React to know where the backend is.
+      # In a real scenario, you'd use a more robust proxy or environment variable management.
+      # For this setup, we assume frontend talks directly to backend's exposed port.
+      REACT_APP_BACKEND_URL: http://localhost:5000 # This will be replaced by Nginx proxy or handled differently in production
+    # Overwrite the default Nginx command to keep it running
+    command: ["nginx", "-g", "daemon off;"] # Nginx serves the build output
+
+volumes:
+  db_data:
