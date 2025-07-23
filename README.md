@@ -2,6 +2,8 @@
 
 This project is a small to-do task web application with a React frontend, Node.js/Express backend, and PostgreSQL database, all containerized with Docker.
 
+![System Architecture](https://drive.google.com/uc?export=view&id=1F589tOjNZHExlpJg_3SyAQGzrPS9pmWD)
+
 ## Features
 
 * **Create Tasks:** Users can add new to-do tasks with a title and an optional description.
