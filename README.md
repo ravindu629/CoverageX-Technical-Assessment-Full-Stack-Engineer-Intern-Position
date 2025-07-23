@@ -2,8 +2,6 @@
 
 This project is a small to-do task web application with a React frontend, Node.js/Express backend, and PostgreSQL database, all containerized with Docker.
 
-![System Architecture](https://drive.google.com/uc?export=view&id=1F589tOjNZHExlpJg_3SyAQGzrPS9pmWD)
-
 ## Features
 
 * **Create Tasks:** Users can add new to-do tasks with a title and an optional description.
@@ -72,6 +70,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ---
 
+![System Architecture](https://drive.google.com/uc?export=view&id=1F589tOjNZHExlpJg_3SyAQGzrPS9pmWD)
+
 ## Testing 🧪
 
 This project includes backend tests (unit and integration) to ensure the API and database interactions work as expected.
@@ -79,15 +79,16 @@ This project includes backend tests (unit and integration) to ensure the API and
 ### Running Backend Tests
 
 **Execute the tests** once inside the container's shell:
-    * **Run all backend tests:**
+
+* **Run all backend tests:**
         ```bash
         npm test
         ```
-    * **Run only unit tests:**
+* **Run only unit tests:**
         ```bash
         npm run test:unit
         ```
-    * **Run only integration tests:**
+* **Run only integration tests:**
         ```bash
         npm run test:integration
         ```
