@@ -78,18 +78,7 @@ This project includes backend tests (unit and integration) to ensure the API and
 
 ### Running Backend Tests
 
-1.  **Stop the main backend application** within its container to free up port 5000 for the tests:
-    ```bash
-    docker-compose stop backend
-    ```
-    *(Note: Your `db` container should remain running.)*
-
-2.  **Access the backend container's shell** to run the tests where dependencies are installed:
-    ```bash
-    docker exec -it todo_backend sh
-    ```
-
-3.  **Execute the tests** once inside the container's shell:
+**Execute the tests** once inside the container's shell:
     * **Run all backend tests:**
         ```bash
         npm test
@@ -103,12 +92,12 @@ This project includes backend tests (unit and integration) to ensure the API and
         npm run test:integration
         ```
 
-4.  **Exit the container shell:**
+**Exit the container shell:**
     ```bash
     exit
     ```
 
-5.  **Restart the backend service** to continue using the application:
+**Restart the backend service** to continue using the application:
     ```bash
     docker-compose start backend
     ```
